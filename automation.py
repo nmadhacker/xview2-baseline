@@ -8,21 +8,23 @@ import shutil
 
 currentPath = os.getcwd()
 xViewRoot = currentPath
+xViewParent=xViewRoot+"/.."
 xViewUtils = currentPath + "/utils"
 
-trainPath = "/mnt/d/Xview\ Challenge/train"
-xDBPath = "/mnt/d/Xview\ Challenge/xDB"
+trainPath = xViewParent+"/train"
+xDBPath = xViewParent+"/xDB"
 
 spacenetSrcModelsPath = xViewRoot+"/spacenet/src/models"
 xSpaceNetDBPath = xDBPath+"/spacenet_gt"
 
 #sample inference image paths
-inference_pre_dissaster_path="/mnt/d/Xview\ Challenge/inference/pre_dissaster.png"
-inference_post_dissaster_path="/mnt/d/Xview\ Challenge/inference/post_dissaster.png"
-inference_result_path="/mnt/d/Xview\ Challenge/inference/inference_result.png"
+inference_path=xViewParent+"/inference"
+inference_pre_dissaster_path=inference_path+"/pre_dissaster.png"
+inference_post_dissaster_path=inference_path+"/post_dissaster.png"
+inference_result_path=inference_path+"/inference_result.png"
 
-inference_localization_path="/mnt/d/Xview\ Challenge/localization.h5"
-inference_classification_path="/mnt/d/Xview\ Challenge/classification.hdf5"
+inference_localization_path=xViewParent"/localization.h5"
+inference_classification_path=xViewParent+"/classification.hdf5"
 
 #train values
 cropSize="128"
@@ -35,11 +37,18 @@ opts, args = getopt.getopt(argv,"o:",["option="])
 for opt, arg in opts:
     if opt in ("-o","--option"):
         if (arg == "1"):
-            print ("running: split train data into disasters: " + arg)
-            subprocess.call("python " +xViewUtils+"/split_into_disasters.py --input " + trainPath + " --output " + xDBPath, shell=True)
+            print ("running: split train data into disasters: ")
+            cmd="python " +xViewUtils+"/split_into_disasters.py"
+            cmd+=" --input " + trainPath
+            cmd+=" --output " + xDBPath
+            subprocess.call(cmd, shell=True)
         elif (arg == "2"):
             print ("running: mask polygons. make sure xDB path is not empty")
-            subprocess.call("python "+xViewUtils+"/mask_polygons.py --input "+xDBPath+" --single-file --border 2", shell=True)
+            cmd="python "+xViewUtils+"/mask_polygons.py"
+            cmd+=" --input "+xDBPath
+            cmd+=" --single-file"
+            cmd+=" --border 2"
+            subprocess.call(cmd, shell=True)
         elif (arg == "3"):
             print ("running: data finalize. make sure you ran option 2 first")
             os.system("rm -rf "+xDBPath+"/spacenet_gt")
