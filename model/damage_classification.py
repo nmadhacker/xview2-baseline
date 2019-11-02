@@ -35,13 +35,13 @@ from shapely.geometry import Polygon
 from collections import defaultdict
 
 import tensorflow as tf
-import keras
+import tensorflow.keras as keras
 import ast
-from keras import Sequential
-from keras.layers import Conv2D, MaxPooling2D, Dense, Flatten, Add, Input, Concatenate
-from keras.models import Model
-from keras.applications.resnet50 import ResNet50
-from keras import backend as K
+from tensorflow.keras import Sequential
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Dense, Flatten, Add, Input, Concatenate
+from tensorflow.keras.models import Model
+from tensorflow.keras.applications.resnet50 import ResNet50
+from tensorflow.keras import backend as K
 
 from model import *
 
@@ -55,7 +55,9 @@ NUM_EPOCHS = 100
 LEARNING_RATE = 0.0001
 RANDOM_SEED = 123
 LOG_STEP = 150
-LOG_DIR = '/path/to/logs' + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+
+CURRENT_DIR=os.getcwd()
+LOG_DIR = CURRENT_DIR+'/../damage_clasification_logs' + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 
 damage_intensity_encoding = dict()
 damage_intensity_encoding[3] = '3'

@@ -74,6 +74,7 @@ disasters=`/bin/ls -1 "$input"`
 
 # Making the spacenet training directory 
 mkdir -p "$input"/spacenet_gt/images
+mkdir -p "$input"/spacenet_gt/masks
 mkdir -p "$input"/spacenet_gt/labels
 mkdir -p "$input"/spacenet_gt/dataSet
 
@@ -81,8 +82,14 @@ mkdir -p "$input"/spacenet_gt/dataSet
 for disaster in $disasters; do
     masks=`/bin/ls -1 "$input"/"$disaster"/masks`
     for mask in $masks; do
-        cp "$input"/"$disaster"/masks/$mask "$input"/spacenet_gt/labels
+		labelName=$mask
+		find=".png"
+		replace=".json"
+		labelName=${labelName//$find/$replace}
         cp "$input"/"$disaster"/images/$mask "$input"/spacenet_gt/images
+		cp "$input"/"$disaster"/labels/$labelName "$input"/spacenet_gt/labels
+		cp "$input"/"$disaster"/masks/$mask "$input"/spacenet_gt/labels
+		cp "$input"/"$disaster"/masks/$mask "$input"/spacenet_gt/masks
     done
 done
 

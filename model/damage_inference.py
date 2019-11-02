@@ -35,11 +35,11 @@ from shapely.geometry import Polygon
 from collections import defaultdict
 
 import tensorflow as tf
-import keras
+import tensorflow.keras as keras
 from model import * 
 
-from keras import Sequential
-from keras.layers import Conv2D, MaxPooling2D, Dense
+from tensorflow.keras import Sequential
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Dense
 from model import *
 
 # Configurations
